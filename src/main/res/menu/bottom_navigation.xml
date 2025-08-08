@@ -3,11 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/contatosFragment"
-        android:icon="@drawable/ic_contact_phone_24" />
+        android:icon="@drawable/ic_contact_phone_24"
+        android:title="Contatos" />
     <item
         android:id="@+id/favoritosFragment"
-        android:icon="@drawable/ic_star_24" />
+        android:icon="@drawable/ic_star_24"
+        android:title="Favoritos" />
     <item
         android:id="@+id/grupoFragment"
-        android:icon="@drawable/ic_group_24" />
+        android:icon="@drawable/ic_group_24"
+        android:title="Grupo" />
 </menu>
