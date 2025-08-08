@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/contatosFragment">
+
+    <fragment
+        android:id="@+id/contatosFragment"
+        android:name="com.example.contatosapp.ContatosFragment"
+        android:label="fragment_contatos"
+        tools:layout="@layout/fragment_contatos" >
+        <action
+            android:id="@+id/action_contatosFragment_to_favoritosFragment"
+            app:destination="@id/favoritosFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritosFragment"
+        android:name="com.example.contatosapp.FavoritosFragment"
+        android:label="fragment_favoritos"
+        tools:layout="@layout/fragment_favoritos" >
+        <action
+            android:id="@+id/action_favoritosFragment_to_grupoFragment"
+            app:destination="@id/grupoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/grupoFragment"
+        android:name="com.example.contatosapp.GrupoFragment"
+        android:label="fragment_grupo"
+        tools:layout="@layout/fragment_grupo" />
+</navigation>
