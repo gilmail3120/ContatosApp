@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constrainContato"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -25,11 +26,11 @@
             android:orientation="horizontal"
             android:padding="8dp">
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imageFotoContato"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                android:background="@drawable/imagem_arredondada"
+                app:shapeAppearanceOverlay="@style/imageArredondada"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/person" />
 

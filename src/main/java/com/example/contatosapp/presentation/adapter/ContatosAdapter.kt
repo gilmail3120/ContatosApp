@@ -9,7 +9,7 @@ import com.example.contatosapp.databinding.ItemContatoBinding
 import com.example.contatosapp.domain.Contatos
 import com.squareup.picasso.Picasso
 
-class ContatosAdapter(): RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>() {
+class ContatosAdapter(val onClick:(Contatos)->Unit): RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>() {
 
     private var listaContatos=listOf<Contatos>()
     fun adicionarLista(list: List<Contatos>){
@@ -26,7 +26,10 @@ class ContatosAdapter(): RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder
                         .load(item.foto)
                         .error(R.drawable.person)
                         .into(imageFotoContato)
-                }?:imageFotoContato.setImageResource(R.drawable.person)
+                }
+                constrainContato.setOnClickListener {
+                    onClick(item)
+                }
             }
         }
     }

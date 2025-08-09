@@ -25,36 +25,50 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
-
         eventoClique()
         navegacaobottom()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (supportFragmentManager.findFragmentById(R.id.frameLayoutPrincipal) == null) {
+            replaceFragment(ContatosFragment())
+        }
     }
 
     private fun navegacaobottom() {
         binding.bottomNavigationPrincipal.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-             R.id.rvContatos -> {replaceFragment(ContatosFragment()); true}
-                R.id.menuBottomFavoritos->{replaceFragment(FavoritosFragment());true}
-                R.id.menuBottomGrupo->{replaceFragment(GrupoFragment()); true}
-                else->false
+                R.id.rvContatos -> {
+                    replaceFragment(ContatosFragment()); true
+                }
+
+                R.id.menuBottomFavoritos -> {
+                    replaceFragment(FavoritosFragment());true
+                }
+
+                R.id.menuBottomGrupo -> {
+                    replaceFragment(GrupoFragment()); true
+                }
+                else -> false
             }
         }
 
     }
 
-    private fun replaceFragment(fragment: Fragment){
+    private fun replaceFragment(fragment: Fragment) {
         val fragmentManager = supportFragmentManager
         val fragmentTransition = fragmentManager.beginTransaction()
-        fragmentTransition.replace(R.id.frameLayoutPrincipal,fragment).commit()
+        fragmentTransition.replace(R.id.frameLayoutPrincipal, fragment).commit()
     }
 
 
-private fun eventoClique() {
-    with(binding) {
-        fbAddContato.setOnClickListener {
-            val intent = Intent(this@MainActivity, CriarContatoActivity::class.java)
-            startActivity(intent)
+    private fun eventoClique() {
+        with(binding) {
+            fbAddContato.setOnClickListener {
+                val intent = Intent(this@MainActivity, CriarContatoActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
-}
 }
