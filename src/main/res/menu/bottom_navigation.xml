@@ -2,15 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/contatosFragment"
+        android:id="@+id/rvContatos"
         android:icon="@drawable/ic_contact_phone_24"
         android:title="Contatos" />
     <item
-        android:id="@+id/favoritosFragment"
+        android:id="@+id/menuBottomFavoritos"
         android:icon="@drawable/ic_star_24"
         android:title="Favoritos" />
     <item
-        android:id="@+id/grupoFragment"
+        android:id="@+id/menuBottomGrupo"
         android:icon="@drawable/ic_group_24"
         android:title="Grupo" />
 </menu>

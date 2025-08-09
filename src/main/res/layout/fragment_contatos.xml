@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:circularflow_defaultRadius="16dp"
-    tools:context=".ContatosFragment">
+    tools:context=".presentation.ui.fragment.ContatosFragment">
 
     <SearchView
         android:id="@+id/searchView"
@@ -21,9 +21,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contatosFragment"
+        android:id="@+id/rvContatos"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"

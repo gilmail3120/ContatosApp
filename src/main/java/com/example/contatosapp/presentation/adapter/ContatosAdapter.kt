@@ -1,0 +1,50 @@
+package com.example.contatosapp.presentation.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.annotation.ReplaceWith
+import androidx.recyclerview.widget.RecyclerView
+import com.example.contatosapp.R
+import com.example.contatosapp.databinding.ItemContatoBinding
+import com.example.contatosapp.domain.Contatos
+import com.squareup.picasso.Picasso
+
+class ContatosAdapter(): RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>() {
+
+    private var listaContatos=listOf<Contatos>()
+    fun adicionarLista(list: List<Contatos>){
+        listaContatos= list
+        notifyDataSetChanged()
+    }
+
+    inner class ContatosViewHolder(val binding: ItemContatoBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(item: Contatos){
+            with(binding){
+                textNomeContato.text = item.nome
+                item.foto.let {
+                    Picasso.get()
+                        .load(item.foto)
+                        .error(R.drawable.person)
+                        .into(imageFotoContato)
+                }?:imageFotoContato.setImageResource(R.drawable.person)
+            }
+        }
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContatosViewHolder {
+      val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemContatoBinding.inflate(layoutInflater,parent,false)
+        return ContatosViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ContatosViewHolder, position: Int) {
+        val lista = listaContatos[position]
+        holder.bind(lista)
+    }
+
+    override fun getItemCount(): Int {
+       return listaContatos.size
+    }
+
+
+}
