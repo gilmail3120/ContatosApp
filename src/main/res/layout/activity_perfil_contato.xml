@@ -25,7 +25,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             app:srcCompat="@drawable/ic_arrow_back_ios_new_24" />
 
         <androidx.cardview.widget.CardView
@@ -40,7 +40,7 @@
                 android:padding="12dp">
 
                 <TextView
-                    android:id="@+id/textView3"
+                    android:id="@+id/textNomePerfilContato"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Nome do contato"
@@ -50,33 +50,33 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/imageView"
+                    android:id="@+id/imagePerfilContato"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/imageArredondada"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/person" />
+                    app:shapeAppearanceOverlay="@style/imageArredondada"
+                    app:srcCompat="@drawable/semimagem" />
 
                 <TextView
                     android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Celular"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView5"
+                    app:layout_constraintBottom_toBottomOf="@+id/textNumeroPerfilContato"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/textView5" />
+                    app:layout_constraintTop_toTopOf="@+id/textNumeroPerfilContato" />
 
                 <TextView
-                    android:id="@+id/textView5"
+                    android:id="@+id/textNumeroPerfilContato"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="+55 38 999 - 999"
                     android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/textView4"
-                    app:layout_constraintTop_toBottomOf="@+id/textView3" />
+                    app:layout_constraintTop_toBottomOf="@+id/textNomePerfilContato" />
 
                 <ImageView
                     android:id="@+id/imageView3"
@@ -132,7 +132,7 @@
                     app:srcCompat="@drawable/ic_groups_24" />
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/textNomeGrupoPerfil"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "32164724640",
+    "project_id": "contatosapp-c13f6",
+    "storage_bucket": "contatosapp-c13f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:32164724640:android:88405d1de4ac673aa6eec5",
+        "android_client_info": {
+          "package_name": "com.example.contatosapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa1YvWOBKQdVLNfIXAOVINJgrRgFcBx6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

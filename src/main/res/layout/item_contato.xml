@@ -12,7 +12,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        app:cardCornerRadius="16dp"
+        android:elevation="16dp"
+        app:cardCornerRadius="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -30,9 +31,9 @@
                 android:id="@+id/imageFotoContato"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
-                app:shapeAppearanceOverlay="@style/imageArredondada"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/person" />
+                app:shapeAppearanceOverlay="@style/imageArredondada"
+                app:srcCompat="@drawable/semimagem" />
 
             <TextView
                 android:id="@+id/textNomeContato"

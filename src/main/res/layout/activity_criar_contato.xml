@@ -30,10 +30,10 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/person" />
+                app:srcCompat="@drawable/semimagem" />
 
             <ImageButton
-                android:id="@+id/imageButton2"
+                android:id="@+id/imageBtnEditarFoto"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="16dp"
@@ -52,6 +52,7 @@
             android:paddingEnd="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editInputNome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_person_24"
@@ -66,6 +67,7 @@
             android:paddingEnd="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editInputTel"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_phone_24"
@@ -80,6 +82,7 @@
             android:paddingEnd="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editInputEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_email_24"
@@ -94,6 +97,7 @@
             android:paddingEnd="8dp">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editInputGrupo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_groups_24"

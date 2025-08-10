@@ -1,16 +1,30 @@
 package com.example.contatosapp.presentation.ui.activity
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.contatosapp.R
 import com.example.contatosapp.databinding.ActivityCriarContatoBinding
+import com.example.contatosapp.domain.Contatos
+import com.example.contatosapp.domain.Grupo
 import com.example.contatosapp.helper.Mensagem
+import com.example.contatosapp.presentation.viewModel.ContatoViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
+@AndroidEntryPoint
 class CriarContatoActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCriarContatoBinding.inflate(layoutInflater) }
+    private val contatoViewModel: ContatoViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -20,13 +34,37 @@ class CriarContatoActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        observavel()
         eventoCLique()
     }
 
+    private fun observavel() {
+        contatoViewModel.mensagem.observe(this) { mensagem ->
+            mensagem?.let {
+                Mensagem.exibir(this, mensagem)
+            }
+        }
+    }
+
     private fun eventoCLique() {
-        with(binding){
+        with(binding) {
             btnCriarPerfilSalvar.setOnClickListener {
-                Mensagem.exibir(this@CriarContatoActivity,"Botao salvar clicado, ainda nao foi configurado")
+
+                with(binding) {
+                    val nome = editInputNome.text.toString()
+                    val tel = editInputTel.text.toString()
+                    val email = editInputEmail.text.toString()
+                    val grupo = editInputGrupo.text.toString()
+                    val novoContato = Contatos(nome, tel, email, "")
+                    val novoGrupo = Grupo(grupo)
+                    contatoViewModel.salvarContato(novoContato)
+                    contatoViewModel.salvarGrupo(novoGrupo)
+                    Log.i("criarcontato", "eventoCLique:$novoContato")
+                }
+                CoroutineScope(Dispatchers.Main).launch {
+                    delay(3000)
+                    finish()
+                }
             }
             btnCriarPerfilCancelar.setOnClickListener {
                 finish()

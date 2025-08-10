@@ -13,7 +13,9 @@ import com.example.contatosapp.presentation.ui.activity.CriarContatoActivity
 import com.example.contatosapp.presentation.ui.fragment.ContatosFragment
 import com.example.contatosapp.presentation.ui.fragment.FavoritosFragment
 import com.example.contatosapp.presentation.ui.fragment.GrupoFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     override fun onCreate(savedInstanceState: Bundle?) {

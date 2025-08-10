@@ -21,11 +21,14 @@ class ContatosAdapter(val onClick:(Contatos)->Unit): RecyclerView.Adapter<Contat
         fun bind(item: Contatos){
             with(binding){
                 textNomeContato.text = item.nome
-                item.foto.let {
+                if (item.foto!=null && item.foto.isNotEmpty()){
                     Picasso.get()
                         .load(item.foto)
-                        .error(R.drawable.person)
+                        .placeholder(R.drawable.carregando)
+                        .error(R.drawable.semimagem)
                         .into(imageFotoContato)
+                }else{
+                    imageFotoContato.setImageResource(R.drawable.semimagem)
                 }
                 constrainContato.setOnClickListener {
                     onClick(item)
