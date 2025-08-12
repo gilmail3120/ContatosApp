@@ -27,7 +27,17 @@ class CriarContatoActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCriarContatoBinding.inflate(layoutInflater) }
     private val contatoViewModel: ContatoViewModel by viewModels()
     private var uriImagemSelecionada: Uri? = null
-    private val armazenamento by lazy { FirebaseStorage.getInstance() }
+    val abrirGaleria = registerForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri ->
+        if (uri != null) {
+            binding.imageCriarPerfil.setImageURI(uri)
+            uriImagemSelecionada = uri
+            Mensagem.exibir(this@CriarContatoActivity, "Imagem selecionada.")
+        } else {
+            Mensagem.exibir(this@CriarContatoActivity, "Nenhuma imagem selecionada")
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -37,6 +47,7 @@ class CriarContatoActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         observavel()
         eventoCLique()
     }
@@ -60,6 +71,7 @@ class CriarContatoActivity : AppCompatActivity() {
                     val grupo = editInputGrupo.text.toString()
                     val novoContato = Contatos(nome, tel, email)
                     val novoGrupo = Grupo(grupo)
+
                     contatoViewModel.salvarContato(novoContato, uriImagemSelecionada)
                     contatoViewModel.salvarGrupo(novoGrupo)
                     Log.i("criarcontato", "eventoCLique:$novoContato")
@@ -75,20 +87,8 @@ class CriarContatoActivity : AppCompatActivity() {
             }
 
             imageBtnEditarFoto.setOnClickListener {
-                val abrirGaleria = registerForActivityResult(
-                    ActivityResultContracts.GetContent()
-                ) { uri ->
-                    if (uri != null) {
-                        binding.imageCriarPerfil.setImageURI(uri)
-                        uriImagemSelecionada = uri
-                        Mensagem.exibir(this@CriarContatoActivity, "Imagem selecionada.")
-                    } else {
-                        Mensagem.exibir(this@CriarContatoActivity, "Nenhuma imagem selecionada")
-                    }
-                }
                 abrirGaleria.launch("image/*")//Mime type
             }
         }
     }
-
 }

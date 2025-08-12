@@ -32,7 +32,6 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
                 Log.i("salvarContatoRepository", "Contato salvo sem foto ")
             }
 
-
         }catch (e: Exception){
             Log.i("contatosRepository", "salvarContato: erro ao salvar contato $e")
         }

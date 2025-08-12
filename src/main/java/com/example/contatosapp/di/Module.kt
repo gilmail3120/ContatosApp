@@ -22,6 +22,11 @@ object Module {
     }
 
     @Provides
+    fun provideFirebaseStorage(): FirebaseStorage{
+        return FirebaseStorage.getInstance()
+    }
+
+    @Provides
     fun provideContatoRepository(firebaseFirestore: FirebaseFirestore,firebaseStorage: FirebaseStorage): ContatoRepositoryImpl{
         return ContatosRepository(firebaseFirestore,firebaseStorage)
     }
