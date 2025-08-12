@@ -1,23 +1,38 @@
 package com.example.contatosapp.data.repository
-import com.google.firebase.firestore.ktx.toObjects
+import android.net.Uri
 import android.util.Log
-import androidx.navigation.serialization.generateRouteWithArgs
 import com.example.contatosapp.domain.Contatos
 import com.example.contatosapp.domain.Grupo
-import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class ContatosRepository @Inject constructor(val db: FirebaseFirestore): ContatoRepositoryImpl {
+class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbStorage: FirebaseStorage): ContatoRepositoryImpl {
 
     private val gruposCollection = db.collection("grupos")
     private val contatosCollection = db.collection("contatos")
+    private val firebaseStorage = fbStorage.getReference("fotos")
 
 
-    override suspend fun salvarContato(novoContato: Contatos) {
+    override suspend fun salvarContato(novoContato: Contatos,uriFoto: Uri?) {
+
         try {
-            val contatoRef =contatosCollection.add(novoContato).await()
+            val documentoReferencia =contatosCollection.add(novoContato).await()
+            val contatoiD = documentoReferencia.id
+            if (uriFoto!=null){
+                val referenciaFoto = firebaseStorage.child("foto_perfil").child("$contatoiD.jpeg")
+                referenciaFoto.putFile(uriFoto).await()
+
+                val urlFotoPerfil = referenciaFoto.downloadUrl.await().toString()
+                documentoReferencia.update("foto",urlFotoPerfil).await()
+                Log.i("salvarContatoRepository", "Contato salvo com foto $urlFotoPerfil")
+            }else{
+                Log.i("salvarContatoRepository", "Contato salvo sem foto ")
+            }
+
+
         }catch (e: Exception){
             Log.i("contatosRepository", "salvarContato: erro ao salvar contato $e")
         }

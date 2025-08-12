@@ -49,7 +49,7 @@ dependencies {
     //Firebase
     implementation("com.google.firebase:firebase-firestore-ktx:24.11.0")
     implementation("com.google.firebase:firebase-analytics-ktx:21.6.1")
-
+    implementation ("com.google.firebase:firebase-storage:20.3.0")
     //dagger Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.android.compiler)

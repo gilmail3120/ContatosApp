@@ -1,8 +1,10 @@
 package com.example.contatosapp.presentation.ui.activity
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -13,18 +15,19 @@ import com.example.contatosapp.domain.Contatos
 import com.example.contatosapp.domain.Grupo
 import com.example.contatosapp.helper.Mensagem
 import com.example.contatosapp.presentation.viewModel.ContatoViewModel
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class CriarContatoActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCriarContatoBinding.inflate(layoutInflater) }
     private val contatoViewModel: ContatoViewModel by viewModels()
-
+    private var uriImagemSelecionada: Uri? = null
+    private val armazenamento by lazy { FirebaseStorage.getInstance() }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -55,11 +58,12 @@ class CriarContatoActivity : AppCompatActivity() {
                     val tel = editInputTel.text.toString()
                     val email = editInputEmail.text.toString()
                     val grupo = editInputGrupo.text.toString()
-                    val novoContato = Contatos(nome, tel, email, "")
+                    val novoContato = Contatos(nome, tel, email)
                     val novoGrupo = Grupo(grupo)
-                    contatoViewModel.salvarContato(novoContato)
+                    contatoViewModel.salvarContato(novoContato, uriImagemSelecionada)
                     contatoViewModel.salvarGrupo(novoGrupo)
                     Log.i("criarcontato", "eventoCLique:$novoContato")
+
                 }
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(3000)
@@ -69,6 +73,22 @@ class CriarContatoActivity : AppCompatActivity() {
             btnCriarPerfilCancelar.setOnClickListener {
                 finish()
             }
+
+            imageBtnEditarFoto.setOnClickListener {
+                val abrirGaleria = registerForActivityResult(
+                    ActivityResultContracts.GetContent()
+                ) { uri ->
+                    if (uri != null) {
+                        binding.imageCriarPerfil.setImageURI(uri)
+                        uriImagemSelecionada = uri
+                        Mensagem.exibir(this@CriarContatoActivity, "Imagem selecionada.")
+                    } else {
+                        Mensagem.exibir(this@CriarContatoActivity, "Nenhuma imagem selecionada")
+                    }
+                }
+                abrirGaleria.launch("image/*")//Mime type
+            }
         }
     }
+
 }

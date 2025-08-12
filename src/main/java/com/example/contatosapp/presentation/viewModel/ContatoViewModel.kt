@@ -1,5 +1,6 @@
 package com.example.contatosapp.presentation.viewModel
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -23,11 +24,11 @@ class ContatoViewModel @Inject constructor(val contatosRepository: ContatosRepos
     val mensagem: LiveData<String>
         get() = _mensagem
 
-    fun salvarContato(contatos: Contatos){
+    fun salvarContato(contatos:Contatos,uriFoto:Uri?){
 
         viewModelScope.launch {
             try {
-                contatosRepository.salvarContato(contatos)
+                contatosRepository.salvarContato(contatos,uriFoto)
                 _mensagem.value ="Contato salvo com sucesso!"
             }catch(e: Exception){
                 _mensagem.value="Erro ao salvar contato."

@@ -5,6 +5,7 @@ import com.example.contatosapp.data.repository.ContatosRepository
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -21,8 +22,9 @@ object Module {
     }
 
     @Provides
-    fun provideContatoRepository(firebaseFirestore: FirebaseFirestore): ContatoRepositoryImpl{
-        return ContatosRepository(firebaseFirestore)
+    fun provideContatoRepository(firebaseFirestore: FirebaseFirestore,firebaseStorage: FirebaseStorage): ContatoRepositoryImpl{
+        return ContatosRepository(firebaseFirestore,firebaseStorage)
     }
+
 
 }
