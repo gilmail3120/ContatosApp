@@ -15,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class PerfilContatoActivity : AppCompatActivity() {
     private val binding by lazy { ActivityPerfilContatoBinding.inflate(layoutInflater) }
-    private var perfilContato:Contatos? = null
+    private var perfilContato: Contatos? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -30,16 +30,17 @@ class PerfilContatoActivity : AppCompatActivity() {
     }
 
     private fun bundle() {
-       val contato = intent.extras
-        if (contato!=null){
+        val contato = intent.extras
+        if (contato != null) {
             perfilContato = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 contato.getParcelable("contato", Contatos::class.java)
             } else {
-               contato.getParcelable("contato")
+                contato.getParcelable("contato")
             }
         }
-        with(binding){
-         textNomePerfilContato.text =   perfilContato?.nome
+        with(binding) {
+            textNomePerfilContato.text = perfilContato?.nome
+            textEmailContato.text = perfilContato?.email
             Picasso.get()
                 .load(perfilContato?.foto)
                 .error(R.drawable.semimagem)
@@ -50,7 +51,7 @@ class PerfilContatoActivity : AppCompatActivity() {
     }
 
     private fun enventoClique() {
-        with(binding){
+        with(binding) {
             imageBtnVolar.setOnClickListener {
                 finish()
             }

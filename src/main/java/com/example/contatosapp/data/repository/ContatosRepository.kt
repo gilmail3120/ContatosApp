@@ -29,11 +29,11 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
                 documentoReferencia.update("foto",urlFotoPerfil).await()
                 Log.i("salvarContatoRepository", "Contato salvo com foto $urlFotoPerfil")
             }else{
-                Log.i("salvarContatoRepository", "Contato salvo sem foto ")
+                Log.i("salvarContatoRepository", "Contato salvo sem foto$uriFoto ")
             }
 
         }catch (e: Exception){
-            Log.i("contatosRepository", "salvarContato: erro ao salvar contato $e")
+            Log.e("ContatosRepository", "salvarContato: erro na atualização do documento", e)
         }
 
     }

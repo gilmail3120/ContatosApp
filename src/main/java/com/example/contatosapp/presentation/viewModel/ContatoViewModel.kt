@@ -33,7 +33,6 @@ class ContatoViewModel @Inject constructor(val contatosRepository: ContatosRepos
             }catch(e: Exception){
                 _mensagem.value="Erro ao salvar contato."
             }
-
         }
     }
     fun salvarGrupo(grupo: Grupo){

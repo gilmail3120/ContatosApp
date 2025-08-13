@@ -54,6 +54,9 @@ class CriarContatoActivity : AppCompatActivity() {
         contatoViewModel.mensagem.observe(this) { mensagem ->
             mensagem?.let {
                 Mensagem.exibir(this, mensagem)
+                if (mensagem == "Contato salvo com sucesso!"){
+                    finish()
+                }
             }
         }
     }
@@ -68,20 +71,20 @@ class CriarContatoActivity : AppCompatActivity() {
                     val email = editInputEmail.text.toString()
                     val grupo = editInputGrupo.text.toString()
                     var camposValidados = true
-                    editInputNome.error = null
-                    editInputTel.error=null
+                    textinputNome.error = null
+                    textInputTelefone.error=null
                     editInputEmail.error=null
 
                     if (nome.isEmpty()){
-                        editInputNome.error ="Preencha o nome"
+                        textinputNome.error ="Preencha o nome"
                         camposValidados = false
                     }
                     if (tel.isEmpty()){
-                        editInputTel.error="Preencha o telefone"
+                        textInputTelefone.error="Preencha o telefone"
                         camposValidados= false
                     }
                     if (email.isEmpty()){
-                        editInputTel.error = "Preencha o e-mail"
+                        textInputEmail.error = "Preencha o e-mail"
                         camposValidados =false
                     }
                     if(camposValidados){
@@ -89,13 +92,8 @@ class CriarContatoActivity : AppCompatActivity() {
                         val novoGrupo = Grupo(grupo)
                         contatoViewModel.salvarContato(novoContato, uriImagemSelecionada)
                         contatoViewModel.salvarGrupo(novoGrupo)
-                        CoroutineScope(Dispatchers.Main).launch {
-                            delay(3000)
-                            finish()
-                        }
                     }
                 }
-
             }
             btnCriarPerfilCancelar.setOnClickListener {
                 finish()
