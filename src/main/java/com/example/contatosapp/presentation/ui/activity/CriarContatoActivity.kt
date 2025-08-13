@@ -2,7 +2,6 @@ package com.example.contatosapp.presentation.ui.activity
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -15,7 +14,6 @@ import com.example.contatosapp.domain.Contatos
 import com.example.contatosapp.domain.Grupo
 import com.example.contatosapp.helper.Mensagem
 import com.example.contatosapp.presentation.viewModel.ContatoViewModel
-import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -69,18 +67,35 @@ class CriarContatoActivity : AppCompatActivity() {
                     val tel = editInputTel.text.toString()
                     val email = editInputEmail.text.toString()
                     val grupo = editInputGrupo.text.toString()
-                    val novoContato = Contatos(nome, tel, email)
-                    val novoGrupo = Grupo(grupo)
+                    var camposValidados = true
+                    editInputNome.error = null
+                    editInputTel.error=null
+                    editInputEmail.error=null
 
-                    contatoViewModel.salvarContato(novoContato, uriImagemSelecionada)
-                    contatoViewModel.salvarGrupo(novoGrupo)
-                    Log.i("criarcontato", "eventoCLique:$novoContato")
+                    if (nome.isEmpty()){
+                        editInputNome.error ="Preencha o nome"
+                        camposValidados = false
+                    }
+                    if (tel.isEmpty()){
+                        editInputTel.error="Preencha o telefone"
+                        camposValidados= false
+                    }
+                    if (email.isEmpty()){
+                        editInputTel.error = "Preencha o e-mail"
+                        camposValidados =false
+                    }
+                    if(camposValidados){
+                        val novoContato = Contatos(nome, tel, email)
+                        val novoGrupo = Grupo(grupo)
+                        contatoViewModel.salvarContato(novoContato, uriImagemSelecionada)
+                        contatoViewModel.salvarGrupo(novoGrupo)
+                        CoroutineScope(Dispatchers.Main).launch {
+                            delay(3000)
+                            finish()
+                        }
+                    }
+                }
 
-                }
-                CoroutineScope(Dispatchers.Main).launch {
-                    delay(3000)
-                    finish()
-                }
             }
             btnCriarPerfilCancelar.setOnClickListener {
                 finish()
