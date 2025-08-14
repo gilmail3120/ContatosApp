@@ -24,22 +24,20 @@ class ContatoViewModel @Inject constructor(val contatosRepository: ContatosRepos
     val mensagem: LiveData<String>
         get() = _mensagem
 
-    fun salvarContato(contatos:Contatos,uriFoto:Uri?){
-
+    fun salvarContatoComGrupo(contato:Contatos,grupo: Grupo,uriFoto: Uri?){
         viewModelScope.launch {
-            try {
-                contatosRepository.salvarContato(contatos,uriFoto)
-                _mensagem.value ="Contato salvo com sucesso!"
-            }catch(e: Exception){
-                _mensagem.value="Erro ao salvar contato."
+            val grupoId = contatosRepository.salvarGrupo(grupo)
+            if (grupoId!=null){
+                val contatoComGrupo =contato.copy(grupoID = grupoId)
+                contatosRepository.salvarContato(contatoComGrupo,uriFoto,grupoId)
+                _mensagem.value = "Contato salvo com sucesso!"
+            }else{
+                _mensagem.value = "Erro ao salvar contato com grupo"
             }
         }
+
     }
-    fun salvarGrupo(grupo: Grupo){
-        viewModelScope.launch {
-            contatosRepository.salvarGrupo(grupo)
-        }
-    }
+
     fun obterContatos(){
         viewModelScope.launch {
          _contatos.value = contatosRepository.obterContatos()

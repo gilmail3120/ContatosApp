@@ -9,4 +9,7 @@ data class Contatos(
     val telefone:String="",
     val email:String="",
     val foto:String="",
+    val grupoID:String="",
+    val nomeGrupo:String="",
+    val favorito: Boolean =false
 ): Parcelable

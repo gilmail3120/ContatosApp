@@ -41,6 +41,7 @@ class PerfilContatoActivity : AppCompatActivity() {
         with(binding) {
             textNomePerfilContato.text = perfilContato?.nome
             textEmailContato.text = perfilContato?.email
+            textNomeGrupoPerfil.text = perfilContato?.nomeGrupo
             Picasso.get()
                 .load(perfilContato?.foto)
                 .error(R.drawable.semimagem)

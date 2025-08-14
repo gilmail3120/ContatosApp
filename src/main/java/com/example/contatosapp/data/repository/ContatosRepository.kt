@@ -16,7 +16,7 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
     private val firebaseStorage = fbStorage.getReference("fotos")
 
 
-    override suspend fun salvarContato(novoContato: Contatos,uriFoto: Uri?) {
+    override suspend fun salvarContato(novoContato: Contatos,uriFoto: Uri?,grupoId:String) {
 
         try {
             val documentoReferencia =contatosCollection.add(novoContato).await()
@@ -35,19 +35,21 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
         }catch (e: Exception){
             Log.e("ContatosRepository", "salvarContato: erro na atualização do documento", e)
         }
-
     }
 
-    override suspend fun salvarGrupo(grupos: Grupo) {
-
-        try {
-            val documentoReference = gruposCollection.add(grupos).await()
-            Log.i("contatosRepository", "Grupo salvo :$documentoReference ")
-
+    override suspend fun salvarGrupo(grupos: Grupo?):String? {
+    return try {
+            if (grupos!=null){
+                val documentoReference = gruposCollection.add(grupos).await()
+                Log.i("contatosRepository", "Grupo salvo :$documentoReference ")
+                 return documentoReference.id
+            }else{
+                null
+            }
         }catch (e: Exception){
             Log.e("contatosRepository", " erro ao salvar grupo:$e ", )
+        null
         }
-
     }
 
     override suspend fun obterContatos(): List<Contatos> {
@@ -56,7 +58,16 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
            Log.i("contatoRepository", "obterContatos: $querySnaptShot")
            val contatos = querySnaptShot.toObjects<Contatos>()
            Log.i("contatoRepository", "obterContatos: $contatos")
-           contatos
+           val contatoComGrupo =contatos.map { contatos->
+               if (contatos.grupoID !=null){
+                   val grupoDoc = gruposCollection.document(contatos.grupoID).get().await()
+                   val nomeGrupo=grupoDoc.getString("nome")
+                   contatos.copy(nomeGrupo = nomeGrupo.toString())
+               }else{
+                   contatos
+               }
+           }
+           return contatoComGrupo
        }catch(e: Exception){
            Log.i("contatosRepository", "obterContatos:$e ")
            emptyList<Contatos>()

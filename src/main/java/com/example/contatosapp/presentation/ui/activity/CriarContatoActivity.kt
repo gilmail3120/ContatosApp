@@ -90,8 +90,9 @@ class CriarContatoActivity : AppCompatActivity() {
                     if(camposValidados){
                         val novoContato = Contatos(nome, tel, email)
                         val novoGrupo = Grupo(grupo)
-                        contatoViewModel.salvarContato(novoContato, uriImagemSelecionada)
-                        contatoViewModel.salvarGrupo(novoGrupo)
+
+                        contatoViewModel.salvarContatoComGrupo(novoContato,novoGrupo,uriImagemSelecionada)
+
                     }
                 }
             }
