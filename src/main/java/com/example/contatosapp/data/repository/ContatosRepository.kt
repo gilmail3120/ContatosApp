@@ -63,6 +63,22 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
 
     }
 
+    override suspend fun obterFavoritos(): List<Contatos> {
+
+        return try {
+            val querySnapShot = contatosCollection.whereEqualTo("favorito",true).get().await()
+            val contatosFavoritos = querySnapShot.documents.mapNotNull { document->
+                val contato = document.toObject(Contatos::class.java)
+                contato
+            }
+            contatosFavoritos
+        }catch (e: Exception){
+            Log.e("favoritarRepository", "Erro ao favoritar $e")
+            emptyList()
+        }
+
+    }
+
     override suspend fun obterContatos(): List<Contatos> {
        return try {
            val querySnaptShot = contatosCollection.get().await()

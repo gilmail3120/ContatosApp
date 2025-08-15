@@ -8,6 +8,7 @@ interface ContatoRepositoryImpl {
     suspend fun salvarContato(novoContato:Contatos,uriFoto: Uri?,grupoId:String)
     suspend fun salvarGrupo(grupos: Grupo?):String?
     suspend fun favoritar(contatoId:String,favoritar: Boolean)
+    suspend fun obterFavoritos():List<Contatos>
     suspend fun obterContatos(): List<Contatos>
     suspend fun editar(contato: Contatos, grupos: Grupo)
     suspend fun deletar()
