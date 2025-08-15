@@ -11,9 +11,10 @@ import com.squareup.picasso.Picasso
 
 class ContatosAdapter(val onClick:(Contatos)->Unit): RecyclerView.Adapter<ContatosAdapter.ContatosViewHolder>() {
 
-    private var listaContatos=listOf<Contatos>()
+    private var listaContatos=mutableListOf<Contatos>()
     fun adicionarLista(list: List<Contatos>){
-        listaContatos= list
+        listaContatos.clear()
+        listaContatos.addAll(list)
         notifyDataSetChanged()
     }
 

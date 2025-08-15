@@ -47,6 +47,11 @@ class ContatosFragment : Fragment() {
         contatoViewModel.obterContatos()
     }
 
+    override fun onResume() {
+        super.onResume()
+        contatoViewModel.obterContatos()
+    }
+
     private fun adapter() {
         contatosAdapter= ContatosAdapter(){contatos->
             val intent = Intent(requireContext(), PerfilContatoActivity::class.java)

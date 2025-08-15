@@ -7,7 +7,7 @@
         android:title="Contatos" />
     <item
         android:id="@+id/menuBottomFavoritos"
-        android:icon="@drawable/ic_star_24"
+        android:icon="@drawable/ic_star_false"
         android:title="Favoritos" />
     <item
         android:id="@+id/menuBottomGrupo"

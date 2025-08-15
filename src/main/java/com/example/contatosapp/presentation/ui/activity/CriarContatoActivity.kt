@@ -25,6 +25,8 @@ class CriarContatoActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCriarContatoBinding.inflate(layoutInflater) }
     private val contatoViewModel: ContatoViewModel by viewModels()
     private var uriImagemSelecionada: Uri? = null
+
+
     val abrirGaleria = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
@@ -103,6 +105,7 @@ class CriarContatoActivity : AppCompatActivity() {
             imageBtnEditarFoto.setOnClickListener {
                 abrirGaleria.launch("image/*")//Mime type
             }
+
         }
     }
 }

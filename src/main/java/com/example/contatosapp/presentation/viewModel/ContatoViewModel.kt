@@ -13,8 +13,10 @@ import com.example.contatosapp.domain.Grupo
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
-class ContatoViewModel @Inject constructor(val contatosRepository: ContatosRepository): ViewModel() {
+class ContatoViewModel @Inject constructor(val contatosRepository: ContatosRepository) :
+    ViewModel() {
 
     val _contatos = MutableLiveData<List<Contatos>>()
     val contatos: LiveData<List<Contatos>>
@@ -24,23 +26,35 @@ class ContatoViewModel @Inject constructor(val contatosRepository: ContatosRepos
     val mensagem: LiveData<String>
         get() = _mensagem
 
-    fun salvarContatoComGrupo(contato:Contatos,grupo: Grupo,uriFoto: Uri?){
+    fun salvarContatoComGrupo(contato: Contatos, grupo: Grupo, uriFoto: Uri?) {
         viewModelScope.launch {
             val grupoId = contatosRepository.salvarGrupo(grupo)
-            if (grupoId!=null){
-                val contatoComGrupo =contato.copy(grupoID = grupoId)
-                contatosRepository.salvarContato(contatoComGrupo,uriFoto,grupoId)
+            if (grupoId != null) {
+                val contatoComGrupo = contato.copy(grupoID = grupoId)
+                contatosRepository.salvarContato(contatoComGrupo, uriFoto, grupoId)
                 _mensagem.value = "Contato salvo com sucesso!"
-            }else{
+            } else {
                 _mensagem.value = "Erro ao salvar contato com grupo"
             }
         }
 
     }
 
-    fun obterContatos(){
+    fun favoritarContato(contato: String, favoritar: Boolean) {
         viewModelScope.launch {
-         _contatos.value = contatosRepository.obterContatos()
+            try {
+                contatosRepository.favoritar(contato, favoritar)
+                _mensagem.value = "Contato favoritado."
+            } catch (e: Exception) {
+                Log.i("contatoViewModel", "Erro ao favoritar contato $e ")
+                _mensagem.value = "Erro ao favotirar contato"
+            }
+        }
+    }
+
+    fun obterContatos() {
+        viewModelScope.launch {
+            _contatos.value = contatosRepository.obterContatos()
 
         }
     }

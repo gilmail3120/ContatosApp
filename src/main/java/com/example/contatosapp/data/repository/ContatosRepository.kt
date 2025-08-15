@@ -52,17 +52,31 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
         }
     }
 
+    override suspend fun favoritar(contatoId: String, favoritar: Boolean) {
+        try {
+            val contatoRef = contatosCollection.document(contatoId) // obtem a id do contato no firebase dentro de document
+            contatoRef.update("favorito",favoritar).await() // pega o contatoref e faz o update de favoritar.
+
+        }catch(e: Exception){
+            Log.e("favoritarRepository", "Erro ao favoritar $e", )
+        }
+
+    }
+
     override suspend fun obterContatos(): List<Contatos> {
        return try {
            val querySnaptShot = contatosCollection.get().await()
-           Log.i("contatoRepository", "obterContatos: $querySnaptShot")
-           val contatos = querySnaptShot.toObjects<Contatos>()
-           Log.i("contatoRepository", "obterContatos: $contatos")
-           val contatoComGrupo =contatos.map { contatos->
-               if (contatos.grupoID !=null){
+            val contatosComId = querySnaptShot.documents.mapNotNull {document->
+                val contato = document.toObject(Contatos::class.java)
+                contato?.id = document.id
+                contato
+            }
+
+           val contatoComGrupo =contatosComId.map { contatos->
+               if (contatos.grupoID.isNotEmpty()){
                    val grupoDoc = gruposCollection.document(contatos.grupoID).get().await()
                    val nomeGrupo=grupoDoc.getString("nome")
-                   contatos.copy(nomeGrupo = nomeGrupo.toString())
+                   contatos.copy(nomeGrupo = nomeGrupo.orEmpty())
                }else{
                    contatos
                }
@@ -70,10 +84,9 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
            return contatoComGrupo
        }catch(e: Exception){
            Log.i("contatosRepository", "obterContatos:$e ")
-           emptyList<Contatos>()
+           emptyList()
        }
     }
-
 
     override suspend fun editar(
         contato: Contatos,

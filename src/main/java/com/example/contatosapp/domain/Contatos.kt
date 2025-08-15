@@ -5,11 +5,12 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Contatos(
+    var id:String? =null,
     val nome:String="",
     val telefone:String="",
     val email:String="",
-    val foto:String="",
+    val foto:String?=null,
     val grupoID:String="",
     val nomeGrupo:String="",
-    val favorito: Boolean =false
+    var favorito: Boolean =false
 ): Parcelable
