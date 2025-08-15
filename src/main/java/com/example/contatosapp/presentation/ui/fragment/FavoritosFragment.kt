@@ -53,7 +53,7 @@ class FavoritosFragment : Fragment() {
 
         with(binding){
             rvContatosFavotiros.adapter = favoritoAdapter
-            rvContatosFavotiros.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.HORIZONTAL,false)
+            rvContatosFavotiros.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL,false)
         }
     }
 }

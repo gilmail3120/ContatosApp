@@ -1,5 +1,6 @@
 package com.example.contatosapp.presentation.ui.activity
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -9,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.contatosapp.R
+import com.example.contatosapp.SelecionarGrupoActivity
 import com.example.contatosapp.databinding.ActivityCriarContatoBinding
 import com.example.contatosapp.domain.Contatos
 import com.example.contatosapp.domain.Grupo
@@ -101,11 +103,13 @@ class CriarContatoActivity : AppCompatActivity() {
             btnCriarPerfilCancelar.setOnClickListener {
                 finish()
             }
-
             imageBtnEditarFoto.setOnClickListener {
                 abrirGaleria.launch("image/*")//Mime type
             }
-
+            editInputGrupo.setOnClickListener {
+                val intent = Intent(this@CriarContatoActivity, SelecionarGrupoActivity::class.java)
+                startActivity(intent)
+            }
         }
     }
 }
