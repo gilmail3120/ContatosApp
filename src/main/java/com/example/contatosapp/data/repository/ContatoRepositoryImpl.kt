@@ -10,6 +10,7 @@ interface ContatoRepositoryImpl {
     suspend fun favoritar(contatoId:String,favoritar: Boolean)
     suspend fun obterFavoritos():List<Contatos>
     suspend fun obterContatos(): List<Contatos>
+    suspend fun obterGrupos(): List<Grupo>
     suspend fun editar(contato: Contatos, grupos: Grupo)
     suspend fun deletar()
 

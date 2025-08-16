@@ -104,6 +104,23 @@ class ContatosRepository @Inject constructor(val db: FirebaseFirestore,val fbSto
        }
     }
 
+    override suspend fun obterGrupos(): List<Grupo> {
+        return try {
+            val querySnapshot = gruposCollection.get().await()
+            val grupos = querySnapshot.documents.mapNotNull { documet->
+                 val grupo = documet.toObject(Grupo::class.java)
+                Log.i("obterGruposRepository", "obterGrupo: $grupo")
+                grupo
+             }
+            Log.i("obterGruposRepository", "obterGrupos: $grupos")
+           grupos
+        }catch (e: Exception){
+            Log.e("obterGruposRepository", "Erro ao obter grupos ${e.message}")
+            emptyList()
+        }
+
+    }
+
     override suspend fun editar(
         contato: Contatos,
         grupos: Grupo
