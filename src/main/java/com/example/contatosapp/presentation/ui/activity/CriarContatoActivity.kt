@@ -3,6 +3,7 @@ package com.example.contatosapp.presentation.ui.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -27,6 +28,16 @@ class CriarContatoActivity : AppCompatActivity() {
     private val binding by lazy { ActivityCriarContatoBinding.inflate(layoutInflater) }
     private val contatoViewModel: ContatoViewModel by viewModels()
     private var uriImagemSelecionada: Uri? = null
+    private var grupo:String?=null
+    private val selecionarGrupoLaucher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result->
+        if (result.resultCode == RESULT_OK){
+            val data:Intent? = result.data
+            grupo = data?.getStringExtra("radiogrupo")
+            grupo?.let {valorGrupo->
+                binding.editInputGrupo.setText(valorGrupo)
+            }
+        }
+    }
 
 
     val abrirGaleria = registerForActivityResult(
@@ -73,7 +84,7 @@ class CriarContatoActivity : AppCompatActivity() {
                     val nome = editInputNome.text.toString()
                     val tel = editInputTel.text.toString()
                     val email = editInputEmail.text.toString()
-                    val grupo = editInputGrupo.text.toString()
+                    editInputGrupo.setText(grupo)
                     var camposValidados = true
                     textinputNome.error = null
                     textInputTelefone.error=null
@@ -92,7 +103,7 @@ class CriarContatoActivity : AppCompatActivity() {
                         camposValidados =false
                     }
                     if(camposValidados){
-                        val novoContato = Contatos(nome = nome, telefone = tel, email = email, nomeGrupo = grupo)
+                        val novoContato = Contatos(nome = nome, telefone = tel, email = email, nomeGrupo = grupo.toString())
                         val novoGrupo = Grupo(grupo)
 
                         contatoViewModel.salvarContatoComGrupo(novoContato,novoGrupo,uriImagemSelecionada)
@@ -108,7 +119,7 @@ class CriarContatoActivity : AppCompatActivity() {
             }
             editInputGrupo.setOnClickListener {
                 val intent = Intent(this@CriarContatoActivity, SelecionarGrupoActivity::class.java)
-                startActivity(intent)
+                selecionarGrupoLaucher.launch(intent)
             }
         }
     }

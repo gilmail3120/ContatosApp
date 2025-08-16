@@ -1,6 +1,7 @@
 package com.example.contatosapp
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.RadioButton
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -15,6 +17,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.contatosapp.databinding.ActivitySelecionarGrupoBinding
 import com.example.contatosapp.domain.Grupo
 import com.example.contatosapp.helper.Mensagem
+import com.example.contatosapp.presentation.ui.activity.CriarContatoActivity
 import com.example.contatosapp.presentation.viewModel.SelecionarGrupoViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,6 +26,7 @@ class SelecionarGrupoActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivitySelecionarGrupoBinding.inflate(layoutInflater) }
     private val selecionarGrupoViewModel: SelecionarGrupoViewModel by viewModels()
+    private var grupoSelecionado:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,11 +65,26 @@ class SelecionarGrupoActivity : AppCompatActivity() {
 
     private fun eventoCLique() {
         with(binding) {
-            imageVoltar.setOnClickListener {
-                finish()
-            }
+
             imageViewAdd.setOnClickListener {
                 showAlertDialog()
+            }
+
+            imageVoltar.setOnClickListener {
+                if (grupoSelecionado!=null){
+                val resultado = Intent().putExtra("radiogrupo",grupoSelecionado)
+                    setResult(RESULT_OK,resultado)
+                }else{
+                    setResult(RESULT_CANCELED)
+                }
+                finish()
+            }
+
+            radioGroup.setOnCheckedChangeListener { group,checked->
+            val radioButtomSelecionado = findViewById<RadioButton>(checked)
+                if (radioButtomSelecionado!=null){
+                    grupoSelecionado = radioButtomSelecionado.text.toString()
+                }
             }
         }
     }
